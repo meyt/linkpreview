@@ -1,6 +1,4 @@
 pytest
 pytest-cov
 pytest-httpserver
-flake8
-black
 coveralls
