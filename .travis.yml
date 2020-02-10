@@ -18,7 +18,7 @@ after_success: if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then travis_retry cover
   fi
 deploy:
   provider: pypi
-  user: meyt
+  user: "__token__"
   password:
     secure: B8VjKZnw4vxFpdtJDQhiqe2WIWKKWTqoyq4hyfRJSBxAu+Onxr2l9A//3UcSXG8IInFJ0BijCkKoyDduP68GNzmZsjM1X4oSpsCupptlISp8BFjYGI+0IL99y9FjvWP5SKI9o/C2XTqZjkBNcP3p1bf5uB7HX0/z6ikIWviMmji5HI4OIN1qSI+vQO9uDAblK1DAIq+Ei/i1Y17j0iP5sdIhP7Q0L6EB4c1WPOvTN3XQgrv3Iv0tmCyk079qk/BuVlZVozhgaS8lasEohFuvrfx5yu1hK3TcrG/WBVR8Q271s41YDV5a4aSl+Z8TQF4aMIjSi1YNcrmZSiTVlL+r9FL72+RgmWDM/h1n/nWnLYwQuaMJN1hN7mQ7Gy0ZnpvG6KE5I6gQ22ENjmUq42R0aVy1Nq8Qn0zHbF1etojqHTEB6jJ30BFLbNZVV2W9thGcoYDyR+2ZPEmiS3tZYjq3f7iEsr6YYX+3G0QT5AkLK381asL2M3qvkjYgzqnqjXC1PknJ3OMunAkrgHJB+ilLmzosKMlXJRtqjbcurJfgmGPbhKdi5x0QaXQQ6KHgrpu9zLx3bkNny33+Z8z92by1X+jW79n/ZCJ6R9x6Y5px59NNJBkSi9xcZbdy/BjbqxuLZjgDdflr+trc4SkWR/4QmuNR+2uCstZP4YEgm4yn9x8=
   on:
