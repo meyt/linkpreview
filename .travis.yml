@@ -18,8 +18,7 @@ after_success: if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then travis_retry cover
 deploy:
   provider: pypi
   user: "meyt"
-  password:
-    secure: "iMki8SXkQBACGRGGY16f5x4grdI5CkfDe1Byu45f8SN9b2Fqb+t2Yf3c5gm8B4UG3LARmCeoM+REXHqjmsVE/cZRHG4VO02njpx6jFg0MTiiJ4Hld3aVr5W+taweBJzsPd+rcKbtsGz1re38QV7csxHIhfEQdG/bgGKHaSbqNmMb6po+tOPgV8OjWL7pOXy341uMskLBlksLdfyIfLLOkVeI76TkxdxPtRj1gcSAQ6oM4Q0T1ZxodoxhVULNDUqcBlPd+/E6OR3Kwr/owe0TeIUMvTiFvno9k8Jbtaw3VyVWdY34ILri4Wp2qAzwVKwkLcUZNcoZZ/glzf/Tyb7xd5C+HK88iRuqXVSJw8XkCMLunZUsE4lJD4JkpDjU6lVaJG1Q0SGG6rdThVcylIAuBcUhCCbzMZ5I8y1PD6sHodY4qUz0OiVieQ6agqAEdCyTERtjizxoFGJPec576uDVO0mPm6SdLfHDBoTIRNnI4OAojVRHfDYjtEY1GgGhXaErOK+I/tH7QN6qUq6MiwuVMrEvmNU1gcDYgP7xh2RwcfWzxgKZLhET3a7WT5DLm2Ff9nbKny1OZUlub03uWJCwDzDVlJ9sM6h92LTioriTgUjc1HJuRO19t6uG/0rFYTgXax5y5z+9juhgJeZhjlUyyJ9Ol2aPqOHMLamDAx8qKdA="
+  password: "$PYPI_TOKEN"
   on:
     tags: true
     distributions: sdist bdist_wheel
