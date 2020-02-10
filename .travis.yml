@@ -17,7 +17,7 @@ after_success: if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then travis_retry cover
 deploy:
   provider: pypi
   user: "meyt"
-  password: "$PYPI_TOKEN"
+  password: $PYPI_API_TOKEN
   on:
     tags: true
     distributions: sdist bdist_wheel
