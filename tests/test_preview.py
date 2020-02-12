@@ -164,6 +164,10 @@ def test_link_preview(httpserver: HTTPServer):
         get_sample("generic/h1-img.html"),
         headers={"content-type": "text/html"},
     )
+    httpserver.expect_request("/preview-3.json").respond_with_data(
+        '{}',
+        headers={"content-type": "application/json"},
+    )
 
     url = httpserver.url_for("/preview1")
     preview = link_preview(url)
@@ -208,3 +212,10 @@ def test_link_preview(httpserver: HTTPServer):
 
     preview = link_preview("https://192.168.1.1:9696", content="OK")
     assert preview.force_title == "192.168.1.1:9696"
+
+    preview = link_preview(httpserver.url_for('/preview-3.json'))
+    assert preview.title is None
+    assert preview.description is None
+    assert preview.image is None
+    assert preview.absolute_image is None
+    assert preview.force_title == "Preview 3"

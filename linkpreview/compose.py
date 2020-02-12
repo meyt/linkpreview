@@ -1,4 +1,5 @@
 from linkpreview import Link, LinkGrabber, LinkPreview
+from linkpreview.exceptions import InvalidMimeTypeError
 
 
 def link_preview(
@@ -8,8 +9,11 @@ def link_preview(
     Get link preview
     """
     if content is None:
-        grabber = LinkGrabber()
-        content = grabber.get_content(url)
+        try:
+            grabber = LinkGrabber()
+            content = grabber.get_content(url)
+        except InvalidMimeTypeError:
+            content = ''
 
     link = Link(url, content)
     return LinkPreview(link, parser=parser)
