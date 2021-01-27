@@ -1,9 +1,9 @@
 # linkpreview
 
 [![Build Status](
-    https://travis-ci.org/meyt/linkpreview.svg?branch=master
+    https://www.travis-ci.com/meyt/linkpreview.svg?branch=master
 )](
-    https://travis-ci.org/meyt/linkpreview
+    https://www.travis-ci.com/meyt/linkpreview
 )
 [![Coverage Status](
     https://coveralls.io/repos/github/meyt/linkpreview/badge.svg?branch=master
