@@ -146,6 +146,22 @@ def test_schema(tin, tout):
                 "image": "http://localhost:8000/img/heck.jpg",
             },
         ),
+        (
+            "invalid-meta.html",
+            {
+                "title": "INVALID PAGE",
+                "description": None,
+                "image": None,
+            },
+        ),
+        (
+            "invalid-meta-syntax.html",
+            {
+                "title": "INVALID PAGE2",
+                "description": 'Jack',
+                "image": None,
+            },
+        ),
     ),
 )
 def test_generic(tin, tout):

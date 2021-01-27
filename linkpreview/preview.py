@@ -51,7 +51,7 @@ class Generic(PreviewBase):
         soup = self._soup
         # meta[name='description']
         meta = soup.find("meta", attrs={"name": "description"})
-        if meta and meta["content"]:
+        if meta and meta.has_attr('content'):
             return meta["content"]
 
         # else extract preview from the first <p> sibling to the first <h1>
