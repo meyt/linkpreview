@@ -58,4 +58,4 @@ class LinkGrabber:
 
             content += chunk
 
-        return content
+        return content, r.url

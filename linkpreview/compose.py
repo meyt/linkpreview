@@ -11,7 +11,7 @@ def link_preview(
     if content is None:
         try:
             grabber = LinkGrabber()
-            content = grabber.get_content(url)
+            content, url = grabber.get_content(url)
         except InvalidMimeTypeError:
             content = ''
 

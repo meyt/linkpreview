@@ -2,6 +2,8 @@ import pytest
 
 from pytest_httpserver import HTTPServer
 
+from werkzeug.wrappers.response import Response
+
 from linkpreview import Link, link_preview
 from linkpreview.preview import OpenGraph, TwitterCard, Schema, Generic
 
@@ -184,6 +186,18 @@ def test_link_preview(httpserver: HTTPServer):
         '{}',
         headers={"content-type": "application/json"},
     )
+    httpserver.expect_request("/redirected").respond_with_data(
+        get_sample("generic/h1-img.html"),
+        headers={"content-type": "text/html"},
+    )
+    redirected_url = "http://%s:%s/redirected" % (httpserver.host, httpserver.port)
+    httpserver.expect_request("/redirection").respond_with_response(
+        Response(
+            mimetype="text/html",
+            headers={"location": redirected_url},
+            status=301
+        )
+    )
 
     url = httpserver.url_for("/preview1")
     preview = link_preview(url)
@@ -235,3 +249,11 @@ def test_link_preview(httpserver: HTTPServer):
     assert preview.image is None
     assert preview.absolute_image is None
     assert preview.force_title == "Preview 3"
+
+    url = httpserver.url_for("/redirection")
+    preview = link_preview(url)
+    assert preview.link.url == redirected_url
+    assert preview.title == "This title is from the first h1 tag."
+    assert preview.description is None
+    assert preview.image == "http://localhost:8000/img/heck.jpg"
+    assert preview.absolute_image == "http://localhost:8000/img/heck.jpg"

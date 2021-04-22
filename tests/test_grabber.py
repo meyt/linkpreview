@@ -45,6 +45,20 @@ def test_grabber(httpserver: HTTPServer):
             headers={"content-length": "100000"},
         )
     )
+    httpserver.expect_request("/redirected").respond_with_response(
+        FakeResponse(
+            mimetype="text/html",
+            response=b"done!",
+        )
+    )
+    redirected_url = "http://%s:%s/redirected" % (httpserver.host, httpserver.port)
+    httpserver.expect_request("/redirection").respond_with_response(
+        FakeResponse(
+            mimetype="text/html",
+            headers={"location": redirected_url},
+            status=301
+        )
+    )
 
     # success
     grabber = LinkGrabber(maxsize=100)
@@ -80,3 +94,8 @@ def test_grabber(httpserver: HTTPServer):
     grabber = LinkGrabber()
     with pytest.raises(exceptions.InvalidContentError):
         grabber.get_content(httpserver.url_for("/badmime"))
+
+    # redirection
+    grabber = LinkGrabber()
+    content, url = grabber.get_content(httpserver.url_for("/redirection"))
+    assert url == redirected_url
