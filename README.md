@@ -100,7 +100,7 @@ url = "http://github.com"
 grabber = LinkGrabber(
     initial_timeout=20, maxsize=1048576, receive_timeout=10, chunk_size=1024,
 )
-content = grabber.get_content(url)
+content, url = grabber.get_content(url)
 link = Link(url, content)
 preview = LinkPreview(link, parser="lxml")
 print("title:", preview.title)
