@@ -25,6 +25,10 @@ class PreviewBase(object):  # pragma: nocover
     def image(self):
         raise NotImplementedError
 
+    @property
+    def video(self):
+        raise NotImplementedError
+
 
 class Generic(PreviewBase):
     """
@@ -68,18 +72,26 @@ class Generic(PreviewBase):
 
     @property
     def image(self):
+        return self._get_featured_media("img")
+
+    @property
+    def video(self):
+        return self._get_featured_media("video")
+
+    def _get_featured_media(self, tag_name):
         """
-        Extract preview image from the given web page.
+        Extract preview media from the given web page.
         """
         soup = self._soup
-        # extract the first image which is sibling to the first h1
+        # extract the first media which is sibling to the first h1
         first_h1 = soup.find("h1")
         if not first_h1:
             return
 
-        first_image = first_h1.find_next_sibling("img")
-        if first_image and first_image["src"]:
+        first_image = first_h1.find_next_sibling(tag_name)
+        if first_image and first_image.get("src"):
             return first_image["src"]
+
 
 
 class SocialPreviewBase(PreviewBase):
@@ -91,8 +103,14 @@ class SocialPreviewBase(PreviewBase):
 
     def _get_property(self, name):
         meta = self._soup.find("meta", attrs={self.__target_attr__: name})
-        if meta and meta["content"]:
-            return meta["content"]
+        if meta:
+            return meta.get("content", meta.get("value"))
+
+    def _get_first_property_match(self, names):
+        for name in names:
+            value = self._get_property(name)
+            if value:
+                return value
 
 
 class OpenGraph(SocialPreviewBase):
@@ -113,7 +131,11 @@ class OpenGraph(SocialPreviewBase):
 
     @property
     def image(self):
-        return self._get_property("og:image")
+        return self._get_first_property_match(["og:image", "og:image:secure_url", "og:image:url"])
+
+    @property
+    def video(self):
+        return self._get_first_property_match(["og:video", "og:video:secure_url", "og:video:url"])
 
 
 class TwitterCard(SocialPreviewBase):
@@ -136,6 +158,10 @@ class TwitterCard(SocialPreviewBase):
     def image(self):
         return self._get_property("twitter:image")
 
+    @property
+    def video(self):
+        return self._get_property("twitter:player")
+
 
 class Schema(SocialPreviewBase):
     """
@@ -156,6 +182,10 @@ class Schema(SocialPreviewBase):
     @property
     def image(self):
         return self._get_property("image")
+
+    @property
+    def video(self):
+        return self._get_property("video")
 
 
 class LinkPreview:
@@ -183,6 +213,10 @@ class LinkPreview:
     @LazyAttribute
     def image(self):
         return self._find_attribute("image")
+
+    @LazyAttribute
+    def video(self):
+        return self._find_attribute("video")
 
     @LazyAttribute
     def absolute_image(self):
