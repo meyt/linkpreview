@@ -13,8 +13,7 @@ before_install:
 - pip install -r requirements-dev.txt
 install: pip install -e .
 script: py.test -vv --cov-report term-missing:skip-covered --cov=linkpreview
-after_success: if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then travis_retry coveralls;
-  fi
+after_success: if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then pip install coveralls; coveralls; fi
 deploy:
   provider: pypi
   user: __token__
