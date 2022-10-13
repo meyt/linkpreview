@@ -77,9 +77,9 @@ class Generic(PreviewBase):
         if not first_h1:
             return
 
-        first_image = first_h1.find_next_sibling("img")
-        if first_image and first_image["src"]:
-            return first_image["src"]
+        img = first_h1.find_next_sibling("img") or first_h1.find_next("img")
+        if img and img["src"]:
+            return img["src"]
 
 
 class SocialPreviewBase(PreviewBase):

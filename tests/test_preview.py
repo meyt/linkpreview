@@ -149,6 +149,22 @@ def test_schema(tin, tout):
             },
         ),
         (
+            "h1-img-far.html",
+            {
+                "title": "This title is from the first h1 tag.",
+                "description": "Some blabla content",
+                "image": "http://localhost:8000/img/heck1.jpg",
+            },
+        ),
+        (
+            "h1-img-far2.html",
+            {
+                "title": "This title is from the first h1 tag.",
+                "description": "Some blabla content",
+                "image": "http://localhost:8000/img/heck.jpg",
+            },
+        ),
+        (
             "invalid-meta.html",
             {
                 "title": "INVALID PAGE",
