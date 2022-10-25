@@ -27,9 +27,11 @@ class LinkGrabber:
         self.receive_timeout = receive_timeout
         self.chunk_size = chunk_size
 
-    def get_content(self, url: str, headers: dict = None):
+    def get_content(self, url: str, headers: dict = None, proxies: dict = None):
+        if proxies is None:
+            proxies = {}
         r = requests.get(
-            url, stream=True, timeout=self.initial_timeout, headers=headers
+            url, stream=True, timeout=self.initial_timeout, headers=headers, proxies=proxies
         )
         r.raise_for_status()
 

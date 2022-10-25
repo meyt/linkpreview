@@ -91,6 +91,16 @@ print("force_title:", preview.force_title)
 print("absolute_image:", preview.absolute_image)
 ```
 
+### Use a `requests` proxy:
+
+Use a [`requests` proxy](https://docs.python-requests.org/en/latest/user/advanced/#proxies) to increase the chance of successfully scraping a link
+
+```python
+from linkpreview import link_preview
+
+preview = link_preview("https://www.youtube.com/watch?v=dQw4w9WgXcQ", proxies={"http": "http://some-proxy-host:8000", "https": "http://some-proxy-host:8000"})
+```
+
 ### Advanced
 
 ```python
