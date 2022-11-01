@@ -178,7 +178,7 @@ def test_schema(tin, tout):
             "invalid-meta-syntax.html",
             {
                 "title": "INVALID PAGE2",
-                "description": 'Jack',
+                "description": "Jack",
                 "image": None,
             },
         ),
@@ -201,19 +201,22 @@ def test_link_preview(httpserver: HTTPServer):
         headers={"content-type": "text/html"},
     )
     httpserver.expect_request("/preview-3.json").respond_with_data(
-        '{}',
+        "{}",
         headers={"content-type": "application/json"},
     )
     httpserver.expect_request("/redirected").respond_with_data(
         get_sample("generic/h1-img.html"),
         headers={"content-type": "text/html"},
     )
-    redirected_url = "http://%s:%s/redirected" % (httpserver.host, httpserver.port)
+    redirected_url = "http://%s:%s/redirected" % (
+        httpserver.host,
+        httpserver.port,
+    )
     httpserver.expect_request("/redirection").respond_with_response(
         Response(
             mimetype="text/html",
             headers={"location": redirected_url},
-            status=301
+            status=301,
         )
     )
 
@@ -261,7 +264,7 @@ def test_link_preview(httpserver: HTTPServer):
     preview = link_preview("https://192.168.1.1:9696", content="OK")
     assert preview.force_title == "192.168.1.1:9696"
 
-    preview = link_preview(httpserver.url_for('/preview-3.json'))
+    preview = link_preview(httpserver.url_for("/preview-3.json"))
     assert preview.title is None
     assert preview.description is None
     assert preview.image is None

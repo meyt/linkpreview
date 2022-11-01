@@ -2,7 +2,7 @@ from urllib.parse import urlparse, urlunparse
 
 
 class Link:
-    """ Dynamic link (`url` (parse/unpars)ed when set/get) """
+    """Dynamic link (`url` (parse/unpars)ed when set/get)"""
 
     def __init__(self, url: str, content: str = None):
         self.url = url

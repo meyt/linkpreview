@@ -30,7 +30,7 @@ def test_grabber(httpserver: HTTPServer):
     httpserver.expect_request("/huge").respond_with_response(
         FakeResponse(
             response=b"x" * 100000,
-            mimetype='text/html',
+            mimetype="text/html",
         )
     )
     httpserver.expect_request("/badmime").respond_with_data(
@@ -51,12 +51,15 @@ def test_grabber(httpserver: HTTPServer):
             response=b"done!",
         )
     )
-    redirected_url = "http://%s:%s/redirected" % (httpserver.host, httpserver.port)
+    redirected_url = "http://%s:%s/redirected" % (
+        httpserver.host,
+        httpserver.port,
+    )
     httpserver.expect_request("/redirection").respond_with_response(
         FakeResponse(
             mimetype="text/html",
             headers={"location": redirected_url},
-            status=301
+            status=301,
         )
     )
 

@@ -36,4 +36,4 @@ class LazyAttribute:  # pragma: nocover
 
 
 def titleize(urlpart):
-    return urlpart.replace('-', ' ').replace('_', ' ').title()
+    return urlpart.replace("-", " ").replace("_", " ").title()
