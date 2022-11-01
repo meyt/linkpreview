@@ -1,3 +1,5 @@
+from os.path import dirname
+
 from bs4 import BeautifulSoup
 
 from .link import Link
@@ -72,12 +74,15 @@ class Generic(PreviewBase):
         Extract preview image from the given web page.
         """
         soup = self._soup
-        # extract the first image which is sibling to the first h1
-        first_h1 = soup.find("h1")
-        if not first_h1:
-            return
+        h1 = soup.find("h1")
+        if h1:
+            # extract the first image which is sibling to the first h1
+            img = h1.find_next_sibling("img") or h1.find_next("img")
 
-        img = first_h1.find_next_sibling("img") or first_h1.find_next("img")
+        else:
+            # just find something
+            img = soup.find("img")
+
         if img and img["src"]:
             return img["src"]
 
@@ -189,11 +194,25 @@ class LinkPreview:
         if not self.image:
             return self.image
 
-        if not self.image.startswith("/"):
+        # is starts with url scheme
+        parts = self.image.split("://")
+        if len(parts) > 1 and self.image.startswith(parts[0]):
             return self.image
 
         link = self.link.copy()
-        link.path = "%s%s" % (link.path, self.image)
+
+        if self.image.startswith("/"):
+            # image is located from root
+            link.path = self.image
+
+        elif link.path.endswith("/"):
+            # the link is a directory
+            link.path = "%s%s" % (link.path, self.image)
+
+        else:
+            # the link is a file
+            link.path = "%s/%s" % (dirname(link.path), self.image)
+
         return link.url
 
     @LazyAttribute
