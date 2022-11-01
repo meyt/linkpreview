@@ -1,5 +1,7 @@
 import pytest
 
+from os.path import dirname
+
 from pytest_httpserver import HTTPServer
 
 from werkzeug.wrappers.response import Response
@@ -221,7 +223,7 @@ def test_link_preview(httpserver: HTTPServer):
     assert preview.force_title == "a title"
     assert preview.description is None
     assert preview.image == "/img/heck.jpg"
-    assert preview.absolute_image == "%s%s" % (url, preview.image)
+    assert preview.absolute_image == "%s%s" % (dirname(url), preview.image)
 
     url = httpserver.url_for("/preview2")
     preview = link_preview(url)
@@ -273,3 +275,38 @@ def test_link_preview(httpserver: HTTPServer):
     assert preview.description is None
     assert preview.image == "http://localhost:8000/img/heck.jpg"
     assert preview.absolute_image == "http://localhost:8000/img/heck.jpg"
+
+
+def test_image():
+    baseurl = "http://thesite.com"
+
+    # absolute image
+    preview = link_preview(
+        url=baseurl + "/article/111",
+        content=get_sample("generic/img-absolute.html"),
+    )
+    assert preview.image == "http://thesitescdn.com/uploads/animal/dog.png"
+    assert preview.absolute_image == preview.image
+
+    # relative image from root
+    preview = link_preview(
+        url=baseurl + "/article/222",
+        content=get_sample("generic/img-relative.html"),
+    )
+    assert preview.image == "/uploads/animal/dog.png"
+    assert preview.absolute_image == baseurl + preview.image
+
+    # relative image from current path
+    preview = link_preview(
+        url=baseurl + "/article/333/",
+        content=get_sample("generic/img-relative2.html"),
+    )
+    assert preview.image == "animal/dog.png"
+    assert preview.absolute_image == baseurl + "/article/333/" + preview.image
+
+    preview = link_preview(
+        url=baseurl + "/article/444/index.html",
+        content=get_sample("generic/img-relative2.html"),
+    )
+    assert preview.image == "animal/dog.png"
+    assert preview.absolute_image == baseurl + "/article/444/" + preview.image
