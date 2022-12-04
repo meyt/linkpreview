@@ -1,6 +1,6 @@
 from .link import Link
+from .linkpreview import LinkPreview
 from .grabber import LinkGrabber
-from .preview import LinkPreview
 from .compose import link_preview
 from .exceptions import LinkPreviewException
 
