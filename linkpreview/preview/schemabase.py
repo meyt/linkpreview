@@ -26,6 +26,15 @@ class SchemaPreviewBase(PreviewBase):
         return sorted(self.schema, key=lambda x: x["type"] in site_types)
 
     @property
+    def site_name(self):
+        for item in self.schema:
+            if item["type"] not in site_types:
+                continue
+
+            if "name" in item:
+                return item["name"]
+
+    @property
     def title(self):
         for item in self.sorted_schema:
             if "name" in item:

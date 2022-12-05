@@ -97,3 +97,23 @@ def test_generic(tin, tout):
     preview = Generic(link, parser="html.parser")
     for key in tout.keys():
         assert getattr(preview, key) == tout[key]
+
+
+@pytest.mark.parametrize(
+    "tin, tout",
+    (
+        ("http://localhost", "localhost"),
+        ("http://site.com", "site.com"),
+        ("http://site.com:8080", "site.com"),
+        ("http://root@site.com:8080", "site.com"),
+        ("http://root:passwd@site.com:8080", "site.com"),
+        ("http://root:passwd@a.b.site.com:8080", "a.b.site.com"),
+        ("http://root:passwd@🍕.com:8080", "🍕.com"),
+        ("http://root:passwd@xn--vi8h.com:8080", "xn--vi8h.com"),
+        ("root:passwd@site.com:8080", ""),
+    ),
+)
+def test_site_name(tin, tout):
+    link = Link(tin, content="")
+    preview = Generic(link, parser="html.parser")
+    assert preview.site_name == tout

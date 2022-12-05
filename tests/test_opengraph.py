@@ -11,11 +11,21 @@ from tests.helpers import get_sample
     (
         (
             "available.html",
-            {"title": "a title", "description": "لورم ایپزوم", "image": None},
+            {
+                "title": "a title",
+                "description": "لورم ایپزوم",
+                "image": None,
+                "site_name": "The Site",
+            },
         ),
         (
             "unavailable.html",
-            {"title": None, "description": None, "image": None},
+            {
+                "title": None,
+                "description": None,
+                "image": None,
+                "site_name": None,
+            },
         ),
         (
             "with-image.html",
@@ -23,6 +33,7 @@ from tests.helpers import get_sample
                 "title": "a title",
                 "description": None,
                 "image": "/img/heck.jpg",
+                "site_name": None,
             },
         ),
     ),

@@ -15,6 +15,7 @@ from tests.helpers import get_sample
                 "title": "a title",
                 "description": "لورم ایپزوم",
                 "image": None,
+                "site_name": None,
             },
         ),
         (
@@ -23,6 +24,7 @@ from tests.helpers import get_sample
                 "title": None,
                 "description": None,
                 "image": None,
+                "site_name": None,
             },
         ),
         (
@@ -31,6 +33,7 @@ from tests.helpers import get_sample
                 "title": "a title",
                 "description": None,
                 "image": "/img/heck.jpg",
+                "site_name": None,
             },
         ),
     ),

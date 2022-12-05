@@ -45,6 +45,7 @@ def test_link_preview(httpserver: HTTPServer):
     assert preview.description is None
     assert preview.image == "/img/heck.jpg"
     assert preview.absolute_image == "%s%s" % (dirname(url), preview.image)
+    assert preview.site_name == "localhost"
 
     url = httpserver.url_for("/preview2")
     preview = link_preview(url)
@@ -52,6 +53,7 @@ def test_link_preview(httpserver: HTTPServer):
     assert preview.description is None
     assert preview.image == "http://localhost:8000/img/heck.jpg"
     assert preview.absolute_image == "http://localhost:8000/img/heck.jpg"
+    assert preview.site_name == "localhost"
 
     preview = link_preview("https://example.com", content="OK")
     assert preview.title is None
@@ -59,6 +61,7 @@ def test_link_preview(httpserver: HTTPServer):
     assert preview.image is None
     assert preview.absolute_image is None
     assert preview.force_title == "example.com"
+    assert preview.site_name == "example.com"
 
     preview = link_preview("https://example.com/bird.jpg", content="OK")
     assert preview.force_title == "Bird"
@@ -75,9 +78,11 @@ def test_link_preview(httpserver: HTTPServer):
         "https://alex:123@abc.com/the-bunny(720p)", content="OK"
     )
     assert preview.force_title == "abc.com/the-bunny(720p)"
+    assert preview.site_name == "abc.com"
 
     preview = link_preview("https://192.168.1.1", content="OK")
     assert preview.force_title == "192.168.1.1"
+    assert preview.site_name == "192.168.1.1"
 
     preview = link_preview("https://192.168.1.1:9696", content="OK")
     assert preview.force_title == "192.168.1.1:9696"

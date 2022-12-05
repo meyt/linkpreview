@@ -56,6 +56,7 @@ from tests.helpers import get_sample
                 "title": "The Article",
                 "description": None,
                 "image": None,
+                "site_name": "The Site",
             },
         ),
         (
@@ -64,6 +65,16 @@ from tests.helpers import get_sample
                 "title": "The Article",
                 "description": None,
                 "image": None,
+                "site_name": "The Site",
+            },
+        ),
+        (
+            "sitename.html",
+            {
+                "title": "The Website",
+                "description": None,
+                "image": None,
+                "site_name": "The Website",
             },
         ),
     ),

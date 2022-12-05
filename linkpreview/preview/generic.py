@@ -7,6 +7,13 @@ class Generic(PreviewBase):
     """
 
     @property
+    def site_name(self):
+        """
+        Extract site name from URL
+        """
+        return self.link.netloc.split("@")[-1].split(":")[0]
+
+    @property
     def title(self):
         """
         Extract title from the given web page.

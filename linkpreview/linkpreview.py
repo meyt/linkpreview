@@ -34,6 +34,10 @@ class LinkPreview:
                 return value
 
     @LazyAttribute
+    def site_name(self):
+        return self._find_attribute("site_name")
+
+    @LazyAttribute
     def title(self):
         return self._find_attribute("title")
 

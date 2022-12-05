@@ -10,6 +10,11 @@ class TwitterCard(MetaPreviewBase):
     __target_attr__ = "name"
 
     @property
+    def site_name(self):
+        # not supported
+        return
+
+    @property
     def title(self):
         return self._get_property("twitter:title")
 

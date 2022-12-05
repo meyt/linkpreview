@@ -10,6 +10,10 @@ class OpenGraph(MetaPreviewBase):
     __target_attr__ = "property"
 
     @property
+    def site_name(self):
+        return self._get_property("og:site_name")
+
+    @property
     def title(self):
         return self._get_property("og:title")
 
