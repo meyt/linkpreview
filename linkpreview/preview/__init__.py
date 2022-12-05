@@ -5,3 +5,4 @@ from .generic import Generic
 from .opengraph import OpenGraph
 from .twittercard import TwitterCard
 from .microdata import Microdata
+from .jsonld import JsonLd
