@@ -3,7 +3,7 @@ from linkpreview.preview.base import PreviewBase
 
 class MetaPreviewBase(PreviewBase):
     """
-    Abstract class for OpenGraph, TwitterCard and Microdata.
+    Base class for OpenGraph, TwitterCard
     """
 
     __target_attr__ = None

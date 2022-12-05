@@ -34,6 +34,38 @@ from tests.helpers import get_sample
                 "image": "/img/heck.jpg",
             },
         ),
+        (
+            "with-thumbnail.html",
+            {
+                "title": "a title",
+                "description": None,
+                "image": "/img/heck.jpg",
+            },
+        ),
+        (
+            "invalid.html",
+            {
+                "title": None,
+                "description": None,
+                "image": None,
+            },
+        ),
+        (
+            "article-website.html",
+            {
+                "title": "The Article",
+                "description": None,
+                "image": None,
+            },
+        ),
+        (
+            "website-article.html",
+            {
+                "title": "The Article",
+                "description": None,
+                "image": None,
+            },
+        ),
     ),
 )
 def test_microdata(tin, tout):
