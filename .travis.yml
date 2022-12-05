@@ -1,21 +1,20 @@
 dist: focal
 language: python
 python:
-- 3.5
-- 3.6
-- 3.7
-- 3.8
-- 3.9
-- 3.10
+  - 3.6
+  - 3.7
+  - 3.8
+  - 3.9
+  - 3.10
 before_install:
-- sudo apt-get update
-- sudo apt-get install -y --no-install-recommends python3-dev libxml2-dev libxslt1-dev
-  libxslt-dev libyajl2
-- pip install -U pip setuptools wheel importlib-metadata
-- pip install -r requirements-dev.txt
+  - sudo apt-get update
+  - sudo apt-get install -y --no-install-recommends python3-dev libxml2-dev libxslt1-dev
+    libxslt-dev libyajl2
+  - pip install -U pip setuptools wheel importlib-metadata
+  - pip install -r requirements-dev.txt
 install: pip install -e .
 script: py.test -vv --cov-report term-missing:skip-covered --cov=linkpreview
-after_success: if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then pip install coveralls; coveralls; fi
+after_success: if [[ $TRAVIS_PYTHON_VERSION == '3.7' ]]; then pip install coveralls; coveralls; fi
 deploy:
   provider: pypi
   user: __token__
