@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-dependencies = ["requests>=2.22.0", "beautifulsoup4>=4.4.0"]
+dependencies = ["requests>=2.22.0", "beautifulsoup4>=4.4.0", "lxml>=4.9.2"]
 
 
 def read_version(module_name):
