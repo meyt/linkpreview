@@ -23,7 +23,7 @@ pip install linkpreview
 
 ## Usage
 
-### Basic:
+### Basic
 
 ```python
 from linkpreview import link_preview
@@ -66,9 +66,11 @@ print("absolute_image:", preview.absolute_image)
 print("site_name:", preview.site_name)
 ```
 
-### Use `lxml` as XML parser:
+### `lxml` as XML parser
 
-Very recommended for better performance
+Very recommended for better performance.
+
+[Install](https://lxml.de/installation.html) the `lxml` and use it like this:
 
 ```python
 from linkpreview import link_preview
