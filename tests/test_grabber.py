@@ -62,6 +62,12 @@ def test_grabber(httpserver: HTTPServer):
             status=301,
         )
     )
+    httpserver.expect_request("/headers").respond_with_handler(
+        lambda x: FakeResponse(
+            response=x.headers["user-agent"].encode(),
+            mimetype="text/html",
+        )
+    )
 
     # success
     grabber = LinkGrabber(maxsize=100)
@@ -102,3 +108,17 @@ def test_grabber(httpserver: HTTPServer):
     grabber = LinkGrabber()
     content, url = grabber.get_content(httpserver.url_for("/redirection"))
     assert url == redirected_url
+
+    # default headers
+    grabber = LinkGrabber()
+    content, url = grabber.get_content(httpserver.url_for("/headers"))
+    assert "Mozilla/5.0" in content.decode()
+
+    # custom headers
+    grabber = LinkGrabber()
+    content, url = grabber.get_content(
+        httpserver.url_for("/headers"),
+        headers={"user-agent": "Googlebot"},
+    )
+    assert "Mozilla/5.0" not in content.decode()
+    assert "Googlebot" in content.decode()
