@@ -90,6 +90,22 @@ from tests.helpers import get_sample
                 "image": None,
             },
         ),
+        (
+            "img-nosrc-invalid.html",
+            {
+                "title": None,
+                "description": None,
+                "image": None,
+            },
+        ),
+        (
+            "img-nosrc.html",
+            {
+                "title": None,
+                "description": None,
+                "image": "/uploads/animal/dog.png",
+            },
+        ),
     ),
 )
 def test_generic(tin, tout):

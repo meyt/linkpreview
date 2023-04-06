@@ -36,6 +36,24 @@ from tests.helpers import get_sample
                 "site_name": None,
             },
         ),
+        (
+            "nocontent.html",
+            {
+                "title": None,
+                "description": "لورم ایپزوم",
+                "image": None,
+                "site_name": "The Site",
+            },
+        ),
+        (
+            "nocontent-duplicate.html",
+            {
+                "title": "the title",
+                "description": "لورم ایپزوم",
+                "image": None,
+                "site_name": "The Site",
+            },
+        ),
     ),
 )
 def test_opengraph(tin, tout):

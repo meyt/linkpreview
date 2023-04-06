@@ -57,11 +57,13 @@ class Generic(PreviewBase):
         h1 = soup.find("h1")
         if h1:
             # extract the first image which is sibling to the first h1
-            img = h1.find_next_sibling("img") or h1.find_next("img")
+            img = h1.find_next_sibling("img", {"src": True}) or h1.find_next(
+                "img", {"src": True}
+            )
 
         else:
             # just find something
-            img = soup.find("img")
+            img = soup.find("img", {"src": True})
 
         if img and img["src"]:
             return img["src"]
