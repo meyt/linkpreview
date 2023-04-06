@@ -1,9 +1,9 @@
 try:
     import orjson as json
-except ModuleNotFoundError:
+except ModuleNotFoundError:  # pragma: nocover
     try:
         import ujson as json
-    except ModuleNotFoundError:
+    except ModuleNotFoundError:  # pragma: nocover
         import json
 
 from linkpreview.preview.schemabase import SchemaPreviewBase
