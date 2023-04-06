@@ -1,6 +1,6 @@
 # linkpreview
 
-[![Build Status](https://www.travis-ci.com/meyt/linkpreview.svg?branch=master)](https://www.travis-ci.com/meyt/linkpreview)
+[![Build Status](https://github.com/meyt/linkpreview/actions/workflows/main.yaml/badge.svg)](https://github.com/meyt/linkpreview/actions)
 [![Coverage Status](https://coveralls.io/repos/github/meyt/linkpreview/badge.svg?branch=master)](https://coveralls.io/github/meyt/linkpreview?branch=master)
 [![pypi](https://img.shields.io/pypi/pyversions/linkpreview.svg)](https://pypi.python.org/pypi/linkpreview)
 
