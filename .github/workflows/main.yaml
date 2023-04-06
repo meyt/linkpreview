@@ -1,0 +1,44 @@
+name: build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install
+        run: |
+          sudo apt-get install -y --no-install-recommends python3-dev libxml2-dev libxslt1-dev libxslt-dev libyajl2
+          python3 -m pip install --upgrade pip
+          python3 -m pip install setuptools wheel twine ujson importlib-metadata
+          python3 -m pip install -r requirements-dev.txt
+          python3 -m pip install --upgrade pytest
+          python3 -m pip install -ve .
+
+      - name: Test
+        run: |
+          py.test -vv --cov-report term-missing:skip-covered --cov=linkpreview
+
+      - name: Coveralls
+        run: coveralls --service=github
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Build Package
+        run: python3 setup.py sdist bdist_wheel
+
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          skip_existing: true
