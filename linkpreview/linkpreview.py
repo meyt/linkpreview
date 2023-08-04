@@ -88,3 +88,13 @@ class LinkPreview:
         link = self.link.copy()
         link.netloc = link.netloc.split("@")[-1]
         return link.url[len(self.link.scheme) + 3 :]
+
+    def to_dict(self):
+        return dict(
+            site_name=self.site_name,
+            title=self.title,
+            description=self.description,
+            image=self.image,
+            absolute_image=self.absolute_image,
+            force_title=self.force_title,
+        )

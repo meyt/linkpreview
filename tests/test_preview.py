@@ -101,6 +101,14 @@ def test_link_preview(httpserver: HTTPServer):
     assert preview.description is None
     assert preview.image == "http://localhost:8000/img/heck.jpg"
     assert preview.absolute_image == "http://localhost:8000/img/heck.jpg"
+    assert preview.to_dict() == {
+        "site_name": "localhost",
+        "title": "This title is from the first h1 tag.",
+        "description": None,
+        "image": "http://localhost:8000/img/heck.jpg",
+        "absolute_image": "http://localhost:8000/img/heck.jpg",
+        "force_title": "This title is from the first h1 tag.",
+    }
 
 
 def test_image():
