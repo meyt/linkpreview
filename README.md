@@ -50,6 +50,8 @@ print("image:", preview.image)
 print("force_title:", preview.force_title)
 print("absolute_image:", preview.absolute_image)
 print("site_name:", preview.site_name)
+print("favicon:", preview.favicon)
+print("absolute_favicon:", preview.absolute_favicon)
 ```
 
 ### Automatic fetch link content
@@ -64,6 +66,8 @@ print("image:", preview.image)
 print("force_title:", preview.force_title)
 print("absolute_image:", preview.absolute_image)
 print("site_name:", preview.site_name)
+print("favicon:", preview.favicon)
+print("absolute_favicon:", preview.absolute_favicon)
 ```
 
 ### `lxml` as XML parser
@@ -82,6 +86,8 @@ print("image:", preview.image)
 print("force_title:", preview.force_title)
 print("absolute_image:", preview.absolute_image)
 print("site_name:", preview.site_name)
+print("favicon:", preview.favicon)
+print("absolute_favicon:", preview.absolute_favicon)
 ```
 
 ### Advanced
@@ -105,4 +111,6 @@ print("image:", preview.image)
 print("force_title:", preview.force_title)
 print("absolute_image:", preview.absolute_image)
 print("site_name:", preview.site_name)
+print("favicon:", preview.favicon)
+print("absolute_favicon:", preview.absolute_favicon)
 ```

@@ -49,31 +49,34 @@ class LinkPreview:
     def image(self):
         return self._find_attribute("image")
 
+    def _get_absolute_image(self, image):
+        # is starts with url scheme
+        parts = image.split("://")
+        if len(parts) > 1 and image.startswith(parts[0]):
+            return image
+
+        link = self.link.copy()
+
+        if image.startswith("/"):
+            # image is located from root
+            link.path = image
+
+        elif link.path.endswith("/"):
+            # the link is a directory
+            link.path = "%s%s" % (link.path, image)
+
+        else:
+            # the link is a file
+            link.path = "%s/%s" % (dirname(link.path), image)
+
+        return link.url
+
     @LazyAttribute
     def absolute_image(self):
         if not self.image:
             return self.image
 
-        # is starts with url scheme
-        parts = self.image.split("://")
-        if len(parts) > 1 and self.image.startswith(parts[0]):
-            return self.image
-
-        link = self.link.copy()
-
-        if self.image.startswith("/"):
-            # image is located from root
-            link.path = self.image
-
-        elif link.path.endswith("/"):
-            # the link is a directory
-            link.path = "%s%s" % (link.path, self.image)
-
-        else:
-            # the link is a file
-            link.path = "%s/%s" % (dirname(link.path), self.image)
-
-        return link.url
+        return self._get_absolute_image(self.image)
 
     @LazyAttribute
     def force_title(self):
@@ -89,6 +92,19 @@ class LinkPreview:
         link.netloc = link.netloc.split("@")[-1]
         return link.url[len(self.link.scheme) + 3 :]
 
+    @LazyAttribute
+    def favicon(self):
+        return tuple(self.generic.favicon)
+
+    @LazyAttribute
+    def absolute_favicon(self):
+        return tuple(
+            map(
+                lambda x: (self._get_absolute_image(x[0]), x[1], x[2]),
+                self.favicon,
+            )
+        )
+
     def to_dict(self):
         return dict(
             site_name=self.site_name,
@@ -97,4 +113,6 @@ class LinkPreview:
             image=self.image,
             absolute_image=self.absolute_image,
             force_title=self.force_title,
+            favicon=self.favicon,
+            absolute_favicon=self.absolute_favicon,
         )

@@ -1,4 +1,12 @@
+import re
+
 from linkpreview.preview.base import PreviewBase
+
+
+favicon_attr_pattern = re.compile(
+    "^(shortcut icon|icon|apple-touch-icon|apple-touch-icon-precomposed)$",
+    re.I,
+)
 
 
 class Generic(PreviewBase):
@@ -67,3 +75,28 @@ class Generic(PreviewBase):
 
         if img and img["src"]:
             return img["src"]
+
+    @staticmethod
+    def _export_favicon_sizes(sizes):
+        # https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#sizes
+        if not sizes or sizes.lower() == "any":
+            return
+
+        return tuple(
+            map(
+                lambda x: tuple(map(int, x.split("x"))),
+                sizes.lower().split(" "),
+            )
+        )
+
+    @property
+    def favicon(self):
+        soup = self._soup
+        for item in soup.find_all("link", attrs={"rel": favicon_attr_pattern}):
+            icon = item.get("href")
+            if icon:
+                yield (
+                    icon,
+                    self._export_favicon_sizes(item.get("sizes")),
+                    " ".join(item.get("rel")),
+                )

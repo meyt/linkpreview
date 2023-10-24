@@ -108,6 +108,8 @@ def test_link_preview(httpserver: HTTPServer):
         "image": "http://localhost:8000/img/heck.jpg",
         "absolute_image": "http://localhost:8000/img/heck.jpg",
         "force_title": "This title is from the first h1 tag.",
+        "favicon": (),
+        "absolute_favicon": (),
     }
 
 
