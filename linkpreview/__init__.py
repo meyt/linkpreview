@@ -4,6 +4,6 @@ from .grabber import LinkGrabber
 from .compose import link_preview
 from .exceptions import LinkPreviewException
 
-__version__ = "0.7.0"
+__version__ = "0.8.0"
 
 __all__ = (Link, LinkGrabber, LinkPreview, link_preview, LinkPreviewException)
