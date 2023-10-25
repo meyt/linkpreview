@@ -79,13 +79,17 @@ class Generic(PreviewBase):
     @staticmethod
     def _export_favicon_sizes(sizes):
         # https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#sizes
-        if not sizes or sizes.lower() == "any":
+        if not sizes:
+            return
+
+        sizes = sizes.lower().strip()
+        if sizes == "any":
             return
 
         return tuple(
             map(
                 lambda x: tuple(map(int, x.split("x"))),
-                sizes.lower().split(" "),
+                sizes.split(" "),
             )
         )
 
