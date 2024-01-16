@@ -82,6 +82,33 @@ from tests.helpers import get_sample
                 "site_name": "The Website",
             },
         ),
+        (
+            "image-object.html",
+            {
+                "title": None,
+                "description": "no more desc",
+                "image": "https://site.com/example.jpg",
+                "site_name": None,
+            },
+        ),
+        (
+            "image-object-empty.html",
+            {
+                "title": None,
+                "description": "no more desc",
+                "image": None,
+                "site_name": None,
+            },
+        ),
+        (
+            "image-object-empty2.html",
+            {
+                "title": None,
+                "description": "no more desc",
+                "image": None,
+                "site_name": None,
+            },
+        ),
     ),
 )
 def test_jsonld(tin, tout):

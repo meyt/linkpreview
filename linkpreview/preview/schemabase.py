@@ -46,11 +46,25 @@ class SchemaPreviewBase(PreviewBase):
             if "description" in item:
                 return item["description"]
 
+    @staticmethod
+    def _extract_image(v):
+        # https://schema.org/image
+        # https://schema.org/ImageObject
+        if isinstance(v, str):
+            return v
+
+        if 'url' not in v:
+            return
+
+        url = v['url']
+        if isinstance(url, str) and len(url):
+            return url
+
     @property
     def image(self):
         for item in self.sorted_schema:
             if "image" in item:
-                return item["image"]
+                return self._extract_image(item["image"])
 
             if "thumbnailUrl" in item:
-                return item["thumbnailUrl"]
+                return self._extract_image(item["thumbnailUrl"])
