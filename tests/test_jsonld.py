@@ -109,6 +109,15 @@ from tests.helpers import get_sample
                 "site_name": None,
             },
         ),
+        (
+            "image-object-null.html",
+            {
+                "title": None,
+                "description": "no more desc",
+                "image": None,
+                "site_name": None,
+            },
+        ),
     ),
 )
 def test_jsonld(tin, tout):

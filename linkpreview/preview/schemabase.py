@@ -53,12 +53,10 @@ class SchemaPreviewBase(PreviewBase):
         if isinstance(v, str):
             return v
 
-        if 'url' not in v:
-            return
-
-        url = v['url']
-        if isinstance(url, str) and len(url):
-            return url
+        if isinstance(v, dict) and 'url' in v:
+            url = v['url']
+            if isinstance(url, str) and len(url):
+                return url
 
     @property
     def image(self):
