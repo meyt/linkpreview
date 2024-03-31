@@ -1,11 +1,14 @@
 import time
 import requests
 
+from typing import Union
+
 from .exceptions import (
     InvalidContentError,
     InvalidMimeTypeError,
     MaximumContentSizeError,
 )
+from .headers import headers_map
 
 
 class LinkGrabber:
@@ -42,12 +45,25 @@ class LinkGrabber:
         self.receive_timeout = receive_timeout
         self.chunk_size = chunk_size
 
-    def get_content(self, url: str, headers: dict = None):
+    def get_content(
+        self,
+        url: str,
+        headers: Union[dict, str] = None,
+        replace_headers: bool = False,
+    ):
+        if isinstance(headers, str):
+            replace_headers = True
+            headers = headers_map[headers]()
+
         r = requests.get(
             url,
             stream=True,
             timeout=self.initial_timeout,
-            headers={**self.headers, **headers} if headers else self.headers,
+            headers=(
+                headers
+                if replace_headers
+                else {**self.headers, **headers} if headers else self.headers
+            ),
         )
         r.raise_for_status()
 

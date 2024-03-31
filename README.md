@@ -114,3 +114,32 @@ print("site_name:", preview.site_name)
 print("favicon:", preview.favicon)
 print("absolute_favicon:", preview.absolute_favicon)
 ```
+
+
+Extend default headers:
+```python
+content, url = grabber.get_content(url, headers={'user-agent': 'Twitterbot'})
+```
+
+Ignore default headers:
+```python
+content, url = grabber.get_content(
+  url,
+  headers={'user-agent': 'Twitterbot', 'accept': '*/*'},
+  replace_headers=True,
+)
+```
+
+Use preset headers:
+```python
+content, url = grabber.get_content( url, headers='googlebot')
+```
+
+Available presets:
+`firefox`,
+`chrome`,
+`googlebot`,
+`twitterbot`,
+`telegrambot`,
+`imessagebot`
+

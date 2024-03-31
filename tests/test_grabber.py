@@ -14,6 +14,14 @@ from linkpreview import exceptions
 from tests.helpers import get_sample
 
 
+def export_headers(headers):
+    headers = dict(map(lambda x: (x[0].lower(), x[1]), headers.items()))
+    return "\n".join(
+        "%s:%s" % (k, "localhost" if k == "host" else headers[k])
+        for k in sorted(headers.keys())
+    )
+
+
 def test_grabber(httpserver: HTTPServer):
 
     sample = get_sample("generic/h1-p-desc.html")
@@ -65,6 +73,12 @@ def test_grabber(httpserver: HTTPServer):
     httpserver.expect_request("/headers").respond_with_handler(
         lambda x: FakeResponse(
             response=x.headers["user-agent"].encode(),
+            mimetype="text/html",
+        )
+    )
+    httpserver.expect_request("/echoheaders").respond_with_handler(
+        lambda x: FakeResponse(
+            response=export_headers(x.headers).encode(),
             mimetype="text/html",
         )
     )
@@ -122,3 +136,49 @@ def test_grabber(httpserver: HTTPServer):
     )
     assert "Mozilla/5.0" not in content.decode()
     assert "Googlebot" in content.decode()
+
+    # replace custom headers
+    grabber = LinkGrabber()
+    content, url = grabber.get_content(
+        httpserver.url_for("/echoheaders"),
+        headers={"user-agent": "Googlebot"},
+    )
+    assert content.decode() == (
+        "accept:text/html,application/xhtml+xml,application/xml;"
+        "q=0.9,*/*;q=0.8\n"
+        "accept-encoding:gzip, deflate\n"
+        "accept-language:en-US,en;q=0.5\n"
+        "connection:keep-alive\n"
+        "host:localhost\n"
+        "user-agent:Googlebot"
+    )
+    # ignore default headers
+    content, url = grabber.get_content(
+        httpserver.url_for("/echoheaders"),
+        headers={"user-agent": "Googlebot"},
+        replace_headers=True,
+    )
+    assert content.decode() == (
+        "accept:*/*\n"
+        "accept-encoding:gzip, deflate\n"
+        "connection:keep-alive\n"
+        "host:localhost\n"
+        "user-agent:Googlebot"
+    )
+    # header presets
+    content, url = grabber.get_content(
+        httpserver.url_for("/echoheaders"),
+        headers="telegrambot",
+    )
+    assert content.decode() == (
+        "accept:text/html,application/xhtml+xml,application/xml;q=0.9,*/*;"
+        "q=0.8\n"
+        "accept-encoding:gzip, deflate\n"
+        "accept-language:en-US,en;q=0.5\n"
+        "connection:keep-alive\n"
+        "cookie:euConsent=true; BCPermissionLevel=PERSONAL; BC_GDPR=11111; "
+        "fhCookieConsent=true; gdpr-source=GB; gdpr_consent=YES; "
+        "beget=begetok\n"
+        "host:localhost\n"
+        "user-agent:TelegramBot (like TwitterBot)"
+    )
