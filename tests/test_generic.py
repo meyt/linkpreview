@@ -1,4 +1,5 @@
 import pytest
+from bs4 import BeautifulSoup
 
 from linkpreview import Link
 from linkpreview.preview import Generic
@@ -113,6 +114,23 @@ def test_generic(tin, tout):
     preview = Generic(link, parser="html.parser")
     for key in tout.keys():
         assert getattr(preview, key) == tout[key]
+
+
+def test_bs4_object():
+    link = Link("http://localhost")
+    content = get_sample("generic/title.html")
+    bs_content = BeautifulSoup(content, "html.parser")
+    preview = Generic(link, soup=bs_content)
+    assert preview.title == "This title is at the title tag."
+    assert preview.description is None
+    assert preview.image is None
+
+
+def test_invalid_arguments():
+    link = Link("http://localhost")
+    bs_content = BeautifulSoup()
+    with pytest.raises(Exception):
+        Generic(link, parser="html.parser", soup=bs_content)
 
 
 @pytest.mark.parametrize(
