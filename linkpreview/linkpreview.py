@@ -19,7 +19,10 @@ class LinkPreview:
         self.twitter = TwitterCard(link, parser)
         self.microdata = Microdata(link, parser)
         self.jsonld = JsonLd(link, parser)
-        self.sources = (
+
+    @LazyAttribute
+    def sources(self):
+        return (
             self.opengraph,
             self.twitter,
             self.microdata,
