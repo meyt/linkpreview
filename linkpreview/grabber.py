@@ -10,6 +10,11 @@ from .exceptions import (
 )
 from .headers import headers_map
 
+INITIAL_TIMEOUT = 20
+MAXSIZE = 1048576
+RECEIVE_TIMEOUT = 10
+CHUNK_SIZE = 10
+
 
 class LinkGrabber:
     headers = {
@@ -29,10 +34,10 @@ class LinkGrabber:
 
     def __init__(
         self,
-        initial_timeout: int = 20,
-        maxsize: int = 1048576,
-        receive_timeout: int = 10,
-        chunk_size: int = 1024,
+        initial_timeout: int = INITIAL_TIMEOUT,
+        maxsize: int = MAXSIZE,
+        receive_timeout: int = RECEIVE_TIMEOUT,
+        chunk_size: int = CHUNK_SIZE,
     ):
         """
         :param initial_timeout in seconds
