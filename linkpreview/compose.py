@@ -1,11 +1,11 @@
-from linkpreview import Link, LinkGrabber, LinkPreview
+from linkpreview import Link, LinkGrabber, linkpreview
 from linkpreview.exceptions import InvalidMimeTypeError
 
 
 def link_preview(
     url: str = None,
     content: str = None,
-    parser: str = "html.parser",
+    parser: str = linkpreview.PARSER,
 ):
     """
     Get link preview
@@ -18,4 +18,4 @@ def link_preview(
             content = ""
 
     link = Link(url, content)
-    return LinkPreview(link, parser=parser)
+    return linkpreview.LinkPreview(link, parser=parser)

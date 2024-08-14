@@ -10,9 +10,11 @@ from linkpreview.preview import (
 )
 from linkpreview.helpers import LazyAttribute, titleize
 
+PARSER = "html.parser"
+
 
 class LinkPreview:
-    def __init__(self, link: Link, parser: str = "html.parser"):
+    def __init__(self, link: Link, parser: str = PARSER):
         self.link = link
         self.generic = Generic(link, parser)
         self.opengraph = OpenGraph(link, parser)
