@@ -17,7 +17,12 @@ PARSER = "html.parser"
 
 
 class LinkPreview:
-    def __init__(self, link: Link, parser: Union[str, None] = PARSER, soup: Union[BeautifulSoup, None] = None):
+    def __init__(
+        self,
+        link: Link,
+        parser: Union[str, None] = PARSER,
+        soup: Union[BeautifulSoup, None] = None,
+    ):
         self.link = link
         self.generic = Generic(link, parser, soup)
         self.opengraph = OpenGraph(link, parser, soup)
