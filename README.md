@@ -10,7 +10,7 @@ Gathering data from:
 
 1. [OpenGraph](https://ogp.me/) meta tags
 2. [TwitterCard](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/abouts-cards) meta tags
-3. [Microdata](https://en.wikipedia.org/wiki/Microdata_(HTML)) meta tags
+3. [Microdata](<https://en.wikipedia.org/wiki/Microdata_(HTML)>) meta tags
 4. [JSON-LD](https://en.wikipedia.org/wiki/JSON-LD) meta tags
 5. HTML Generic tags (`h1`, `p`, `img`)
 6. URL readable parts
@@ -115,13 +115,14 @@ print("favicon:", preview.favicon)
 print("absolute_favicon:", preview.absolute_favicon)
 ```
 
-
 Extend default headers:
+
 ```python
 content, url = grabber.get_content(url, headers={'user-agent': 'Twitterbot'})
 ```
 
 Ignore default headers:
+
 ```python
 content, url = grabber.get_content(
   url,
@@ -131,6 +132,7 @@ content, url = grabber.get_content(
 ```
 
 Use preset headers:
+
 ```python
 content, url = grabber.get_content( url, headers='googlebot')
 ```
@@ -143,3 +145,16 @@ Available presets:
 `telegrambot`,
 `imessagebot`
 
+If you already have parsed `BeautifulSoup` object:
+
+```python
+from bs4 import BeautifulSoup
+from linkpreview import Link, LinkPreview
+
+url = "http://example.com"
+content = "<h1>Hello</h1>"
+soup = BeautifulSoup(content, "html.parser")
+link = Link(url, content)
+preview = LinkPreview(link, soup=soup)
+print("title:", preview.title)
+```
