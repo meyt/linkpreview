@@ -20,6 +20,9 @@ class PreviewBase(object):  # pragma: nocover
                 "Only one of `parser` or `soup` argument must be provided"
             )
 
+        if soup is None and parser is None:
+            parser = "html.parser"
+
         self.link = link
         self._soup = soup or BeautifulSoup(self.link.content, parser)
 

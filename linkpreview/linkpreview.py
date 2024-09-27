@@ -13,14 +13,12 @@ from linkpreview.preview import (
 )
 from linkpreview.helpers import LazyAttribute, titleize
 
-PARSER = "html.parser"
-
 
 class LinkPreview:
     def __init__(
         self,
         link: Link,
-        parser: Union[str, None] = PARSER,
+        parser: Union[str, None] = None,
         soup: Union[BeautifulSoup, None] = None,
     ):
         self.link = link

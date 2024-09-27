@@ -7,7 +7,7 @@ from linkpreview.exceptions import InvalidMimeTypeError
 def link_preview(
     url: str = None,
     content: str = None,
-    parser: str = linkpreview.PARSER,
+    parser: Union[None, str] = None,
     headers: Union[dict, str] = None,
     replace_headers: bool = False,
     initial_timeout: int = grabber.INITIAL_TIMEOUT,
