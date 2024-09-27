@@ -1,4 +1,7 @@
 from os.path import dirname
+from typing import Union
+
+from bs4 import BeautifulSoup
 
 from linkpreview.link import Link
 from linkpreview.preview import (
@@ -14,13 +17,13 @@ PARSER = "html.parser"
 
 
 class LinkPreview:
-    def __init__(self, link: Link, parser: str = PARSER):
+    def __init__(self, link: Link, parser: Union[str, None] = PARSER, soup: Union[BeautifulSoup, None] = None):
         self.link = link
-        self.generic = Generic(link, parser)
-        self.opengraph = OpenGraph(link, parser)
-        self.twitter = TwitterCard(link, parser)
-        self.microdata = Microdata(link, parser)
-        self.jsonld = JsonLd(link, parser)
+        self.generic = Generic(link, parser, soup)
+        self.opengraph = OpenGraph(link, parser, soup)
+        self.twitter = TwitterCard(link, parser, soup)
+        self.microdata = Microdata(link, parser, soup)
+        self.jsonld = JsonLd(link, parser, soup)
 
     @LazyAttribute
     def sources(self):
