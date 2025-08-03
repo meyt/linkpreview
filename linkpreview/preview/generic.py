@@ -2,7 +2,6 @@ import re
 
 from linkpreview.preview.base import PreviewBase
 
-
 favicon_attr_pattern = re.compile(
     "^(shortcut icon|icon|apple-touch-icon|apple-touch-icon-precomposed)$",
     re.I,
@@ -85,6 +84,10 @@ class Generic(PreviewBase):
         sizes = sizes.lower().strip()
         if sizes == "any":
             return
+
+        # The letter x is confused with × by some developers
+        # (like nytimes website), need to normalize it. #33
+        sizes = sizes.replace("×", "x")
 
         return tuple(
             map(

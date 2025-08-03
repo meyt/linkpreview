@@ -1,5 +1,4 @@
 from linkpreview import link_preview
-
 from tests.helpers import get_sample
 
 
@@ -101,6 +100,7 @@ def test_favicon():
     )
     assert preview.favicon == (
         ("/apple-touch-icon.png", ((180, 180),), "apple-touch-icon"),
+        ("/favicon-64×64.png", ((64, 64),), "icon"),
         ("/favicon-32x32.png", ((32, 32),), "icon"),
         ("/favicon-16x16.png", ((16, 16),), "icon"),
         ("/favicon.ico", ((32, 32), (16, 16)), "shortcut icon"),
@@ -108,6 +108,7 @@ def test_favicon():
     )
     assert preview.absolute_favicon == (
         (baseurl + "/apple-touch-icon.png", ((180, 180),), "apple-touch-icon"),
+        (baseurl + "/favicon-64×64.png", ((64, 64),), "icon"),
         (baseurl + "/favicon-32x32.png", ((32, 32),), "icon"),
         (baseurl + "/favicon-16x16.png", ((16, 16),), "icon"),
         (baseurl + "/favicon.ico", ((32, 32), (16, 16)), "shortcut icon"),
