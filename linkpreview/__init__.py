@@ -1,9 +1,11 @@
+# flake8:noqa
+# isort: skip_file
 from .link import Link
 from .linkpreview import LinkPreview
 from .grabber import LinkGrabber
 from .compose import link_preview
 from .exceptions import LinkPreviewException
 
-__version__ = "0.12.0"
+__version__ = "0.12.1"
 
 __all__ = (Link, LinkGrabber, LinkPreview, link_preview, LinkPreviewException)
