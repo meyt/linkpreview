@@ -1,6 +1,7 @@
 import ipaddress
 import socket
 import time
+from typing import Union
 from urllib.parse import urljoin, urlsplit
 
 import requests
@@ -72,7 +73,7 @@ class LinkGrabber:
     def get_content(
         self,
         url: str,
-        headers: dict | str = None,
+        headers: Union[dict, str] = None,
         replace_headers: bool = False,
     ):
         if isinstance(headers, str):
