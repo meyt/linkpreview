@@ -90,6 +90,16 @@ print("favicon:", preview.favicon)
 print("absolute_favicon:", preview.absolute_favicon)
 ```
 
+### Security
+
+If URLs come from untrusted users, pass `allow_private=False` to avoid
+SSRF: only `http`/`https` URLs resolving to public addresses are fetched
+(re-checked on every redirect), otherwise `BlockedAddressError` is raised.
+
+```python
+link_preview(url, allow_private=False)
+```
+
 ### Advanced
 
 ```python

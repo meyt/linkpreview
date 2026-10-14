@@ -14,6 +14,8 @@ def link_preview(
     maxsize: int = grabber.MAXSIZE,
     receive_timeout: int = grabber.RECEIVE_TIMEOUT,
     chunk_size: int = grabber.CHUNK_SIZE,
+    allow_private: bool = True,
+    max_redirects: int = grabber.MAX_REDIRECTS,
 ):
     """
     Get link preview
@@ -25,6 +27,8 @@ def link_preview(
                 maxsize=maxsize,
                 receive_timeout=receive_timeout,
                 chunk_size=chunk_size,
+                allow_private=allow_private,
+                max_redirects=max_redirects,
             )
             content, url = gb.get_content(
                 url,

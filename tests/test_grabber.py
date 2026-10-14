@@ -1,16 +1,11 @@
-import pytest
-
 from time import sleep
 
+import pytest
 from pytest_httpserver import HTTPServer
-
+from requests.exceptions import ReadTimeout, TooManyRedirects
 from werkzeug.wrappers.response import Response
 
-from requests.exceptions import ReadTimeout
-
-from linkpreview import LinkGrabber
-from linkpreview import exceptions
-
+from linkpreview import LinkGrabber, exceptions
 from tests.helpers import get_sample
 
 
@@ -182,3 +177,29 @@ def test_grabber(httpserver: HTTPServer):
         "host:localhost\n"
         "user-agent:TelegramBot (like TwitterBot)"
     )
+
+
+def test_allow_private(httpserver: HTTPServer):
+    httpserver.expect_request("/redir").respond_with_data(
+        "",
+        status=302,
+        headers={"location": "http://169.254.169.254/"},
+    )
+    grabber = LinkGrabber(allow_private=False)
+    for url in (
+        httpserver.url_for("/redir"),
+        "http://[::1]/",
+        "http://169.254.169.254/",
+        "ftp://example.com/",
+        "file:///etc/passwd",
+    ):
+        with pytest.raises(exceptions.BlockedAddressError):
+            grabber.get_content(url)
+
+
+def test_max_redirects(httpserver: HTTPServer):
+    httpserver.expect_request("/loop").respond_with_data(
+        "", status=302, headers={"location": "/loop"}
+    )
+    with pytest.raises(TooManyRedirects):
+        LinkGrabber(max_redirects=2).get_content(httpserver.url_for("/loop"))

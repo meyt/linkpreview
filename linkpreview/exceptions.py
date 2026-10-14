@@ -12,3 +12,7 @@ class InvalidMimeTypeError(InvalidContentError):
 
 class MaximumContentSizeError(InvalidContentError):
     pass
+
+
+class BlockedAddressError(LinkPreviewException):
+    pass
